@@ -36,9 +36,36 @@ VISUALIZATION_MARGIN = 10
 TEXT_ROW_SIZE = 10
 TEXT_FONT_SIZE = 1
 TEXT_FONT_THICKNESS = 1
-STANDARD_BOX_COLOR = (255, 0, 0)
-FOOD_ITEM_BOX_COLOR = (0, 255, 0)
-FOOD_AND_COMMON_ITEMS = {'banana', 'apple', 'orange', 'carrot', 'book', 'person', 'cell phone'}
+GREEN = (255, 0, 0)
+RED = (0, 255, 0)
+BLUE = (0, 0, 255)
+
+
+Recyclable = {
+    "bottle", "wine glass", "cup", "fork", "knife", "spoon", "bowl",
+    "book", "tv", "laptop", "mouse", "remote", "keyboard", "cell phone",
+    "microwave", "oven", "toaster", "refrigerator", "clock"
+}
+
+Non_Recyclable = {
+    "car", "motorcycle", "airplane", "bus", "train", "truck", "boat",
+    "traffic light", "fire hydrant", "stop sign", "parking meter", "bench",
+    "backpack", "umbrella", "handbag", "tie", "suitcase",
+    "frisbee", "skis", "snowboard", "baseball bat", "baseball glove",
+    "skateboard", "surfboard", "tennis racket",
+    "chair", "couch", "bed", "dining table", "toilet", "potted plant",
+    "scissors", "teddy bear", "hair drier", "toothbrush"
+}
+
+Organic = {
+    "banana", "apple", "sandwich", "orange", "broccoli", "carrot",
+    "hot dog", "pizza", "donut", "cake",
+    "bird", "cat", "dog", "horse", "sheep", "cow", "elephant",
+    "bear", "zebra", "giraffe"
+}
+
+
+
 
 def visualize(input_image, detection_result) -> np.ndarray:
     for detection in detection_result.detections:
@@ -50,7 +77,7 @@ def visualize(input_image, detection_result) -> np.ndarray:
         object_name = detected_object.category_name
         confidence_score = round(detected_object.score, 2)
 
-        box_color = FOOD_ITEM_BOX_COLOR if object_name in FOOD_AND_COMMON_ITEMS else STANDARD_BOX_COLOR
+        box_color = RED if object_name in Non_Recyclable else BLUE if object_name in Recyclable else GREEN if object_name in Organic else (255, 255, 255)
         
         cv2.rectangle(input_image, box_start, box_end, box_color, 3)
         
@@ -59,6 +86,15 @@ def visualize(input_image, detection_result) -> np.ndarray:
         cv2.putText(input_image, label_text, text_position, cv2.FONT_HERSHEY_PLAIN, TEXT_FONT_SIZE, box_color, TEXT_FONT_THICKNESS)
 
     return input_image
+
+def get_object_classification(object_name):
+    if object_name in Recyclable:
+        return "Recyclable"
+    elif object_name in Non_Recyclable:
+        return "Non-Recyclable"
+    elif object_name in Organic:
+        return "Organic"
+    return "Unknown"
 
 @app.route('/detect', methods=['POST'])
 def detect_objects():
@@ -94,6 +130,7 @@ def detect_objects():
                 detected_box = detection.bounding_box
                 processed_detections.append({
                     'category': detected_category.category_name,
+                    'classification': get_object_classification(detected_category.category_name),
                     'score': round(float(detected_category.score), 2),
                     'bbox': {
                         'x': detected_box.origin_x,
