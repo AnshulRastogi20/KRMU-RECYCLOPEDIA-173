@@ -1,0 +1,9 @@
+services:
+  - type: web
+    name: recyclopedia-backend
+    runtime: python
+    buildCommand: pip install -r BACKEND/requirements.txt
+    startCommand: cd BACKEND && gunicorn app:app
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.9.0
