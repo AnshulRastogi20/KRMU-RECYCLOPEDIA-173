@@ -12,7 +12,7 @@ from PIL import Image
 import os
 
 app = Flask(__name__)
-CORS(app, origins=['https://frontend-recyclopedia.vercel.app', 'http://localhost:5173', 'http://localhost:3000', 'http://localhost:8080'])
+CORS(app, origins=['https://frontend-recyclopedia.vercel.app', 'https://recyclopedia-xi.vercel.app/' ,'http://localhost:5173', 'http://localhost:3000', 'http://localhost:8080'])
 
 model_url = "https://storage.googleapis.com/mediapipe-models/object_detector/efficientdet_lite0/float16/latest/efficientdet_lite0.tflite"
 model_path = "efficientdet_lite0.tflite"
