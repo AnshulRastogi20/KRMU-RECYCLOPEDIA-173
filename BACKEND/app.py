@@ -12,7 +12,7 @@ from PIL import Image
 import os
 
 app = Flask(__name__)
-CORS(app)
+CORS(app, origins=['https://your-frontend-url.netlify.app'])
 
 model_url = "https://storage.googleapis.com/mediapipe-models/object_detector/efficientdet_lite0/float16/latest/efficientdet_lite0.tflite"
 model_path = "efficientdet_lite0.tflite"
