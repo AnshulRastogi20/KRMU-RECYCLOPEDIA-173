@@ -12,7 +12,7 @@ from PIL import Image
 import os
 
 app = Flask(__name__)
-CORS(app, origins=['https://frontend-recyclopedia.vercel.app', 'http://localhost:5173', 'http://localhost:3000'])
+CORS(app, origins=['https://frontend-recyclopedia.vercel.app', 'http://localhost:5173', 'http://localhost:3000', 'http://localhost:8080'])
 
 model_url = "https://storage.googleapis.com/mediapipe-models/object_detector/efficientdet_lite0/float16/latest/efficientdet_lite0.tflite"
 model_path = "efficientdet_lite0.tflite"
@@ -36,10 +36,9 @@ VISUALIZATION_MARGIN = 10
 TEXT_ROW_SIZE = 10
 TEXT_FONT_SIZE = 1
 TEXT_FONT_THICKNESS = 1
-GREEN = (255, 0, 0)
-RED = (0, 255, 0)
+GREEN = (0, 255, 0)
+RED = (255, 0, 0)
 BLUE = (0, 0, 255)
-
 
 Recyclable = {
     "bottle", "wine glass", "cup", "fork", "knife", "spoon", "bowl",
@@ -64,10 +63,7 @@ Organic = {
     "bear", "zebra", "giraffe"
 }
 
-
-
-
-def visualize(input_image, detection_result) -> np.ndarray:
+def visualize(input_image, detection_result):
     for detection in detection_result.detections:
         bounding_box = detection.bounding_box
         box_start = bounding_box.origin_x, bounding_box.origin_y
