@@ -41,13 +41,13 @@ RED = (255, 0, 0)
 BLUE = (0, 0, 255)
 
 Recyclable = {
-    "bottle", "wine glass", "cup", "fork", "knife", "spoon", "bowl",
+     "wine glass", "cup", "fork", "knife", "spoon", "bowl",
     "book", "tv", "laptop", "mouse", "remote", "keyboard", "cell phone",
     "microwave", "oven", "toaster", "refrigerator", "clock"
 }
 
 Non_Recyclable = {
-    "car", "motorcycle", "airplane", "bus", "train", "truck", "boat",
+    "bottle","car", "motorcycle", "airplane", "bus", "train", "truck", "boat",
     "traffic light", "fire hydrant", "stop sign", "parking meter", "bench",
     "backpack", "umbrella", "handbag", "tie", "suitcase",
     "frisbee", "skis", "snowboard", "baseball bat", "baseball glove",
